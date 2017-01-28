@@ -1,0 +1,34 @@
+CALCULATING THE EXPECTED COST OF 3 ORDERS
+
+This Documentation contains the detailed explanation of the 2 versions of the code:
+
+1)	Identifying and Fixing The Bugs:
+
+a)	Major Bugs:
+
+•	Based on the output and business logic given, it is clearly understood that the output should be the total sum of 3 individual shopping cart orders which does include the individual order total sales tax and order total. And the individual orders to be printed should be in order.
+•	First of all, HashMap doesn’t guarantee the order, so to guarantee the order we have to use LinkedHashMap instead of HashMap. So, replaced it (Now it will guarantee the order as shown in the output to be printed).
+•	For every single order, we are adding the items, quantity to the LinkedHashMap and then calculating the total sales tax and Total. To place the next order here we are clearing the cart and reusing it for another order.  But, here we are missing the past orders to be printed (not copying the individual cart to HashMap, which finally has to be printed).
+•	In order to fix that implemented the concept of deep cloning: which means when we remove/change (clearing the cart) from the copy of the List order, then the original will stay. So, here deep cloning is applied to second level of objects.
+•	Here, we want every individual order List added to cart to be a separate copy, in order to do that we have to iterate over the entry set of the HashMap and create a copy of each List manually, adding it to the map until 3 consecutive orders.
+•	So, in order to use concept of cloning we should implement cloneable interface which will have List of orderlines (For every order). So, the order and orderline implements cloneable.
+•	Coming to the Calculator class, according to the output given we are returning the double value not the int value so changed it to double.
+•	And also in Calculator class, we should initialize the grandtotal from “0’’ and missing the size declaration in for loop iterator which iterates through the items of the order and it has to be “-1”. 
+•	Also with the code present for the sales tax calculation is different for item description which has imported and non imported items, but with the output observed the “imported” word is case sensitive and not case sensitive in two different ways. So, implemented the sales tax calculation condition for “Imported” (case sensitive) also using or condition.
+
+b)	Cosmetic Bugs:
+
+•	Coming to the orderline class, here not used “this.” Keyword to refer the members (item, quantity) of the current object as the orderline method is being invoked. 
+•	And also here, when the item is null, printing that item is null and also throwing the exception. One statement could be enough so just printed it.
+•	We should use “math.round” instead of “math.floor” to round up to 2 decimals places for every calculation according to the output given.
+•	Missing the quantity of item to be printed in the output and fixed it by adding it to the print statement.
+
+2)	Refactoring the code and unit testing:
+
+•	Refactored the code with the names which suits according to the business and flow of the procedure and calculation in the calculator class and main method which have the individual cart orders.
+•	Implemented and covered the Invalid Price exception and Invalid Quantity Exception in case if the entered price and quantity are invalid.
+•	Covered unit tests for the calculated price for the each item, calculated total price of the each cart order, sales tax for imported and non imported items scenarios.
+
+
+
+
